@@ -62,7 +62,7 @@ def process_frame(img, input_details, output_details, font):
         boxes,
         scores,
         100,
-        iou_threshold=0.2,
+        iou_threshold=0.1,
         score_threshold=0.3
     )
     draw_img = Image.fromarray( img)
@@ -111,16 +111,17 @@ def write_frame(pipe, frame):
 f = ImageFont.truetype('Courier New.ttf',20)
 
 vid = cv2.VideoCapture(0)
-
-vid.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+W = 1280
+H = 720
+vid.set(cv2.CAP_PROP_FRAME_WIDTH, W)
+vid.set(cv2.CAP_PROP_FRAME_HEIGHT, H)
 vid.set(cv2.CAP_PROP_FPS, 24)
 # out = cv2.VideoWriter('out.mp4',  
 #                          cv2.VideoWriter_fourcc(*'mp4v'), 
-#                          24, (640,480))
+#                          24, (W,H))
 URL = "http://localhost:8080/stream"
-print(f'Stream URL: {URL}'))
-stream = create_stream(URL, 640, 480, 24)
+print(f'Stream URL: {URL}')
+stream = create_stream(URL, W, H, 24)
 while True: 
     t1 = time.time_ns()
     ret, vf = vid.read()
